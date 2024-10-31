@@ -16,6 +16,10 @@ import {
   WashingMachine,
   WatchIcon,
   Footprints,
+  ChartArea,
+  PocketKnife,
+  HeartPulse,
+  AudioWaveform,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
@@ -37,6 +41,9 @@ const categoriesWithIcon = [
   { id: "kids", label: "Kids", icon: BabyIcon },
   { id: "accessories", label: "Accessories", icon: WatchIcon },
   { id: "footwear", label: "Footwear", icon: Footprints },
+  { id: "gadget", label: "Gadgets", icon: PocketKnife },
+  { id: "beauty", label: "Beauty", icon: HeartPulse },
+  { id: "other", label: "Other", icon: ChartArea },
 ];
 
 const brandsWithIcon = [
@@ -46,6 +53,8 @@ const brandsWithIcon = [
   { id: "levi", label: "Levi's", icon: Airplay },
   { id: "zara", label: "Zara", icon: Images },
   { id: "h&m", label: "H&M", icon: Heater },
+  { id: "snitch", label: "Snitch", icon: AudioWaveform },
+  { id: "other", label: "Other", icon: ChartArea },
 ];
 function ShoppingHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
