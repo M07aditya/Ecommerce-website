@@ -30,20 +30,23 @@ const PORT = process.env.PORT || 5000;
 
 const _dirname = path.resolve();
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST", "DELETE", "PUT"],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Cache-Control",
-      "Expires",
-      "Pragma",
-    ],
-    credentials: true,
-  })
-);
+const allowedOrigins = [
+  'http://localhost:5173', // for local development
+  'https://ecommerce-website-k84z.onrender.com' // for deployed frontend
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin, like mobile apps or curl
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true // If you're using cookies
+}));
 
 app.use(cookieParser());
 app.use(express.json());
@@ -60,7 +63,7 @@ app.use("/api/shop/review", shopReviewRouter);
 
 app.use("/api/common/feature", commonFeatureRouter);
 
-app.use(express.static(path.join(_dirname,"/client/dist")))
+app.use(express.static(path.join(_dirname,"/client/dist")));
 app.get('*',(req,res)=>{
   res.sendFile(path.resolve(_dirname,"client","dist","index.html"));
 })
