@@ -5,7 +5,7 @@ const cors = require("cors");
 const authRouter = require("./routes/auth/auth-routes");
 const adminProductsRouter = require("./routes/admin/products-routes");
 const adminOrderRouter = require("./routes/admin/order-routes");
-
+const path = require("path");
 const shopProductsRouter = require("./routes/shop/products-routes");
 const shopCartRouter = require("./routes/shop/cart-routes");
 const shopAddressRouter = require("./routes/shop/address-routes");
@@ -27,6 +27,8 @@ mongoose
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+const _dirname = path.resolve();
 
 app.use(
   cors({
@@ -57,5 +59,10 @@ app.use("/api/shop/search", shopSearchRouter);
 app.use("/api/shop/review", shopReviewRouter);
 
 app.use("/api/common/feature", commonFeatureRouter);
+
+app.use(express.static(path.join(_dirname,"/client/dist")))
+app.get('*',(req,res)=>{
+  res.sendFile(path.resolve(_dirname,"client","dist","index.html"));
+})
 
 app.listen(PORT, () => console.log(`Server is now running on port ${PORT}`));
