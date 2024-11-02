@@ -30,26 +30,32 @@ const PORT = process.env.PORT || 5000;
 
 const _dirname = path.resolve();
 
-const allowedOrigins = [
-  'http://localhost:5173', // for local development
-  'https://ecommerce-website-k84z.onrender.com' // for deployed frontend
-];
+// const allowedOrigins = [
+//   'http://localhost:5000', // for local development
+//   'https://ecommerce-website-k84z.onrender.com' // for deployed frontend
+// ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin, like mobile apps or curl
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true // If you're using cookies
-}));
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     // Allow requests with no origin, like mobile apps or curl
+//     if (!origin) return callback(null, true);
+//     if (allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true // If you're using cookies
+// }));
 
 app.use(cookieParser());
 app.use(express.json());
+const corsOptions = {
+  origin:"https://localhost:5173",
+  Credentials:true
+}
+app.use(cors(corsOptions));
+
 app.use("/api/auth", authRouter);
 app.use("/api/admin/products", adminProductsRouter);
 app.use("/api/admin/orders", adminOrderRouter);
